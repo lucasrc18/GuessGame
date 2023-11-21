@@ -1,0 +1,26 @@
+{
+    "today": "naruto",
+    "naruto": {
+        "URL": "https://conteudo.imguol.com.br/c/entretenimento/16/2017/06/27/naruto-1498593686428_v2_900x506.png",
+        "gender": "Homem",
+        "village": "Vila da folha",
+        "occupation": "Hokage",
+        "clan": "Uzumaki",
+        "team": ["Time 7", "Forças Aliadas Shinobi"],
+        "jinchuuriki": true,
+        "ranking": "Genin",
+        "status": "Vivo"
+    },
+    "sasuke": {
+        "URL": "https://upload.wikimedia.org/wikipedia/pt/0/02/Sasukereup.jpg",
+        "name": "Sasuke",
+        "gender": "Homem",
+        "village": ["Vila da folha", "Vila do som"],
+        "occupation": "Hokage das sombras",
+        "clan": "Uchiha",
+        "team": ["Time 7", "Taka", "Akatsuki"],
+        "ranking": "Genin",
+        "jinchuuriki": false,
+        "status": "Vivo"
+    }
+}
