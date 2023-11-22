@@ -14,7 +14,9 @@ request.onload = () => {
         gameLoaded = true
     }
 
-    todayCharacter = data[data["today"]]
+    const keys = Object.keys(data)
+    todayCharacter = data[Utils.choice(keys)]
+    console.log(todayCharacter.name)
 }
 
 const attemptList = []
@@ -24,7 +26,7 @@ document.onkeyup = async function (e) {
     
     // if "enter" is pressed
     if (e.key === "Enter") {
-        let attempt = document.getElementById("character_inp").value.toLowerCase()
+        let attempt = document.getElementById("character_inp").value.toLowerCase().replace(" ", "")
 
         if(gameLoaded){
             if(!attemptList.includes(attempt)){
@@ -40,7 +42,7 @@ document.onkeyup = async function (e) {
 async function insertCharacter(character){
     const tries = document.getElementById("tries")
 
-    tries.insertAdjacentHTML('beforeend', getCharacterDOM(character))
+    tries.insertAdjacentHTML('afterbegin', getCharacterDOM(character))
 }
 
 function getCharacterDOM(character){
@@ -53,27 +55,22 @@ function getCharacterDOM(character){
 
     const accuracy = {}
 
-    if(gender == todayCharacter.gender){
+    if(gender == todayCharacter['gender']){
         accuracy['gender'] = 'right'
     } else {
         accuracy['gender'] = ''
     }
 
-    accuracy['village'] = checkGameArray('village', village)
-    accuracy['occupation'] = checkGameArray('occupation', occupation)
-    accuracy['clan'] = checkGameArray('clan', clan)
-    accuracy['team'] = checkGameArray('team', team)
+    accuracy['village'] = compareCharacters('village', village)
+    accuracy['occupation'] = compareCharacters('occupation', occupation)
+    accuracy['clan'] = compareCharacters('clan', clan)
+    accuracy['team'] = compareCharacters('team', team)
+    accuracy['ranking'] = compareCharacters('ranking', ranking)
 
     if(jinchuuriki == todayCharacter.jinchuuriki){
         accuracy['jinchuuriki'] = 'right'
     } else {
         accuracy['jinchuuriki'] = ''
-    }
-
-    if(ranking == todayCharacter.ranking){
-        accuracy['ranking'] = 'right'
-    } else {
-        accuracy['ranking'] = ''
     }
 
     if(status == todayCharacter.status){
@@ -91,24 +88,24 @@ function getCharacterDOM(character){
             <div class="info clan         ${accuracy['clan']}"> ${(typeof clan != 'string') ? clan.join(" <br /> ") : clan} </div>
             <div class="info team         ${accuracy['team']}"> ${(typeof team != 'string') ? team.join(" <br /> ") : team} </div>
             <div class="info jinchuuriki  ${accuracy['jinchuuriki']}"> ${(jinchuuriki) ? "Jinchuuriki" : "Não jinchuuriki"} </div>
-            <div class="info ranking      ${accuracy['ranking']}"> ${(ranking)} </div>
+            <div class="info ranking      ${accuracy['ranking']}"> ${(typeof ranking != 'string') ? ranking.join(" <br /> ") : ranking} </div>
             <div class="info status ${accuracy['status']}"> ${status} </div>
         </div>
     ` 
 }
 
-function checkGameArray(arrayName, char){
+function compareCharacters(arrayName, char){
     if(typeof char != 'string' || typeof todayCharacter[arrayName] != 'string'){
         if(typeof char != 'string' && typeof todayCharacter[arrayName] != 'string'){
             // ambos array
-            if(char == todayCharacter[arrayName]){
+            if(JSON.stringify(char) == JSON.stringify(todayCharacter[arrayName])){
                 return 'right'
             } else {
-                char.forEach(i => {
-                    if(todayCharacter[arrayName].includes(i)){
-                        return 'half'
-                    }
-                })
+                if(char.some(el => todayCharacter[arrayName].includes(el))){
+                    return 'half' 
+                } else {
+                    return ''
+                }
             }
         } else {
             if(typeof char != 'string'){
@@ -133,5 +130,11 @@ function checkGameArray(arrayName, char){
         } else {
             return ''
         }
+    }
+}
+
+const Utils = {
+    choice: function(array){
+        return array[Math.floor(Math.random() * array.length)]
     }
 }
