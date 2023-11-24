@@ -4,7 +4,7 @@ request.open("get", jsonURL)
 request.responseType = "json"
 request.send()
 
-let data;
+var data;
 let gameLoaded = false
 let todayCharacter;
 
@@ -17,24 +17,49 @@ request.onload = () => {
     const keys = Object.keys(data)
     todayCharacter = data[Utils.choice(keys)]
     console.log(todayCharacter.name)
+
+    setArr(keys)
 }
 
 const attemptList = []
 
 document.onkeyup = async function (e) {
     e.preventDefault()
-    
+
     // if "enter" is pressed
     if (e.key === "Enter") {
         let attempt = document.getElementById("character_inp").value.toLowerCase().replace(" ", "")
 
         if(gameLoaded){
+            if(attempt == ""){
+                return
+            }
+
             if(!attemptList.includes(attempt)){
-                await insertCharacter(data[attempt])
-                attemptList.push(attempt)
+                if(Object.keys(data).includes(attempt)){
+                    await insertCharacter(data[attempt])
+                    attemptList.push(attempt)
+                    
+                    if (data[attempt] == todayCharacter) {
+                        playerWins()
+                    }
+                } else {
+                    const suggestionsList = getFilteredSuggestions()
+                    if(attempt.length < suggestionsList[0].length){
+                        await insertCharacter(data[suggestionsList[0]])
+                        attemptList.push(suggestionsList[0])
+                        updateSuggestionsBasedOnAttempts(attemptList)
+
+                        if (data[suggestionsList[0]] == todayCharacter) {
+                            playerWins()
+                        }
+                    }
+                }
             }
             
             document.getElementById("character_inp").value = ""
+            document.getElementById("character_inp").focus()
+            document.getElementById("suggestions").classList.remove("active")
         }
     }
 }
@@ -131,6 +156,12 @@ function compareCharacters(arrayName, char){
             return ''
         }
     }
+}
+
+function playerWins(){
+    // TODO: Create animation
+    // TODO: Create visual feedback
+    alert('You won!') // temporary
 }
 
 const Utils = {

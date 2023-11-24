@@ -156,8 +156,8 @@
         "isJinchuuriki": false,
         "status": "Morto"
     },
-    "Chibi": {
-        "URL": "https://pm1.aminoapps.com/6473/f49d47bef328eae8a64679155b2759bff37bc3f8_hq.jpg",
+    "chibi": {
+        "URL": "https://i.pinimg.com/originals/10/37/71/10377198702b6a373f8f2e2354f5a85c.jpg",
         "name": "Chibi",
         "gender": "Homem",
         "village": "Vila da chuva",
@@ -168,16 +168,16 @@
         "isJinchuuriki": false,
         "status": "Morto"
     },
-    "tiodoramen": {
-        "URL": "https://pm1.aminoapps.com/6367/11db8844f6b805e06c73602761d3e310ae858f8a_hq.jpg",
-        "name": "Tio do ramen",
+    "tio do ramen":{
+        "URL": "https://i.pinimg.com/originals/10/37/71/10377198702b6a373f8f2e2354f5a85c.jpg",
+        "name": "Chibi",
         "gender": "Homem",
-        "village": "Vila da folha",
-        "occupation": "Cozinheiro",
-        "clan": "Desconhecido",
-        "team": "Não se aplica",
+        "village": "Vila da chuva",
+        "occupation": "Cachorro",
+        "clan": "Não se aplica",
+        "team": "Órfãos de Ame",
         "ranking": "Não se aplica",
         "isJinchuuriki": false,
-        "status": "Vivo"
-    } 
+        "status": "Morto"
+    }
 }
